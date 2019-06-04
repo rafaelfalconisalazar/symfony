@@ -51,7 +51,7 @@ class OneToOneController extends AbstractFOSRestController
         $serializer = SerializerBuilder::create()->build();
 
         try {
-            $oneToOneDto = $serializer->deserialize($request->getContent(),'AppBundle\Dto\OneToOneDto','json');
+            $oneToOneDto = $serializer->deserialize($request->getContent(), 'AppBundle\Dto\OneToOneDto', 'json');
             $oneToOne = new OneToOne();
             $oneToOne->setName($oneToOneDto->getName());
             $oneToOneDtoOne = $oneToOneDto->getOneDto();
