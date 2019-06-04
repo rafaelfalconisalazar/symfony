@@ -1,0 +1,15 @@
+AppBundle\Entity\OneToMany:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\OneToManyRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

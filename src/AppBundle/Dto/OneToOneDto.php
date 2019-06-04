@@ -5,23 +5,20 @@ namespace AppBundle\Dto;
 use AppBundle\Entity\OneToOne;
 use JMS\Serializer\Annotation\Type;
 
-class OnoToOneDto
+class OneToOneDto
 {
     /**
      * @Type("int")
-     * @var int
      */
     private $id;
 
     /**
      * @Type("string")
-     * @var string
      */
     private $name;
 
     /**
      * @Type ("AppBundle\Dto\OneDto")
-     * @Type OneDto
      */
     private $oneDto;
 

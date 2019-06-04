@@ -9,13 +9,11 @@ class OneDto
 {
     /**
      * @Type("string")
-     * @var string
      */
     private $name;
 
     /**
      * @Type("int")
-     * @var int
      */
     private $id;
 

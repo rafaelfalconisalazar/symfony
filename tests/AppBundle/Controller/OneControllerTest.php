@@ -41,5 +41,5 @@ class OneControllerTest extends WebTestCase
         self::assertJson($respose->getContent());
     }
 
-   
+
 }

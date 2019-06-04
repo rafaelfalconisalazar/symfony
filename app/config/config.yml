@@ -108,6 +108,8 @@ fos_rest:
         view_response_listener: 'force'
         formats:
             json: true
+    serializer:
+        serialize_null: true
 nelmio_api_doc:
     documentation:
         host: 127.0.0.1:8000/api/v1/docs
@@ -116,3 +118,8 @@ nelmio_api_doc:
             title: PFM
             description: API para FPM
             version: 1.0.0
+
+jms_serializer:
+    default_context:
+        serialization:
+            serialize_null: true
