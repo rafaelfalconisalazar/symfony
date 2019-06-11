@@ -6,10 +6,12 @@ use AppBundle\Dto\OneDto;
 use AppBundle\Entity\One;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerBuilder;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 
 /**
@@ -20,6 +22,16 @@ class OneController extends AbstractFOSRestController
 {
     /**
      * @Rest\Get("")
+     *
+     * @SWG\Tag(name="one")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return all one entity",
+     *    @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=OneDto::class))
+     *     )
+     * )
      */
     public function listAllOne()
     {
@@ -34,16 +46,46 @@ class OneController extends AbstractFOSRestController
 
     /**
      * @Rest\Get("/{id}")
+     *
+     * @SWG\Tag(name="one")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return  one entity by id",
+     *    @SWG\Schema(
+     *         @SWG\Items(ref=@Model(type=OneDto::class))
+     *     )
+     * )
      */
     public function listOneById($id)
     {
         $one = $this->getDoctrine()->getRepository('AppBundle:One')->find($id);
-        $oneDto = new OneDto($one);
-        return $oneDto;
+        if ($one == null) {
+            return new View("no one entity found", Response::HTTP_NOT_FOUND);
+        } else {
+            $oneDto = new OneDto($one);
+            return $oneDto;
+        }
+
     }
 
     /**
      * @Rest\Post("")
+     * @SWG\Tag(name="one")
+     * @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          description="JSON Payload",
+     *          required=true,
+     *          format="application/json",
+     *          @SWG\Schema(
+     *              @Model(type=OneDto::class)
+     *          )
+     *
+     *      )
+     * @SWG\Response(
+     *     response=201,
+     *     description="Return one create ",
+     * )
      */
     public function createOne(Request $request)
     {
@@ -63,15 +105,31 @@ class OneController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Put("")
+     * @Rest\Put("/{id}")
+     * @SWG\Tag(name="one")
+     * @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          description="JSON Payload",
+     *          required=true,
+     *          format="application/json",
+     *          @SWG\Schema(
+     *              @Model(type=OneDto::class)
+     *          )
+     *
+     *      )
+     * @SWG\Response(
+     *     response=201,
+     *     description="Return one create ",
+     * )
      */
-    public function editOne(Request $request)
+    public function editOne(Request $request,$id)
     {
         $serializer = SerializerBuilder::create()->build();
 
         try {
             $oneDto = $serializer->deserialize($request->getContent(), 'AppBundle\Dto\OneDto', 'json');
-            $one = $this->getDoctrine()->getRepository('AppBundle\Entity\One')->find($oneDto->getId());
+            $one = $this->getDoctrine()->getRepository('AppBundle\Entity\One')->find($id);
             if ($one == null) {
                 return new View("One not found", Response::HTTP_NOT_FOUND);
             } else {

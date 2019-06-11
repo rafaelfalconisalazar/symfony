@@ -110,14 +110,7 @@ fos_rest:
             json: true
     serializer:
         serialize_null: true
-nelmio_api_doc:
-    documentation:
-        host: 127.0.0.1:8000/api/v1/docs
-        schemes: [http, https]
-        info:
-            title: PFM
-            description: API para FPM
-            version: 1.0.0
+
 
 jms_serializer:
     default_context:
